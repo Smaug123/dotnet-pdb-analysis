@@ -43,10 +43,14 @@ module MetadataReader =
                 else
                     let isEmbedded =
                         portablePdbReader.GetCustomDebugInformation document
-                        |> Seq.exists (fun handle ->
+                        |> Seq.map (fun handle ->
                             let debugInfo = portablePdbReader.GetCustomDebugInformation handle
-                            portablePdbReader.GetGuid debugInfo.Kind = embeddedSourceGuid
+                            portablePdbReader.GetGuid debugInfo.Kind
                         )
+                        |> Seq.distinct
+                        |> Seq.toList
+
+                    let isEmbedded = isEmbedded |> Seq.exists (fun kind -> kind = embeddedSourceGuid)
 
                     let hashAlgo =
                         portablePdbReader.GetGuid doc.HashAlgorithm

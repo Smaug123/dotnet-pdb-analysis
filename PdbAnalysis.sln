@@ -1,8 +1,10 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "NugetMetadata", "NugetMetadata\NugetMetadata.fsproj", "{2E6323F4-BCB9-4241-9AB4-598426AE4079}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "PdbAnalysis", "PdbAnalysis\PdbAnalysis.fsproj", "{2E6323F4-BCB9-4241-9AB4-598426AE4079}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "NugetMetadata.App", "NugetMetadata.App\NugetMetadata.App.fsproj", "{AB35B7F3-44BF-43E8-879D-ED635F7EB2F9}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "PdbAnalysis.App", "PdbAnalysis.App\PdbAnalysis.App.fsproj", "{AB35B7F3-44BF-43E8-879D-ED635F7EB2F9}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "PdbAnalysis.Test", "PdbAnalysis.Test\PdbAnalysis.Test.fsproj", "{BAB3D815-78EB-41F6-94FF-69EC0CBFCC48}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +20,9 @@ Global
 		{AB35B7F3-44BF-43E8-879D-ED635F7EB2F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB35B7F3-44BF-43E8-879D-ED635F7EB2F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB35B7F3-44BF-43E8-879D-ED635F7EB2F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAB3D815-78EB-41F6-94FF-69EC0CBFCC48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAB3D815-78EB-41F6-94FF-69EC0CBFCC48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAB3D815-78EB-41F6-94FF-69EC0CBFCC48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAB3D815-78EB-41F6-94FF-69EC0CBFCC48}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
