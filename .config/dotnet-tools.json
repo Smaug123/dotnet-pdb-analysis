@@ -7,12 +7,6 @@
       "commands": [
         "fantomas"
       ]
-    },
-    "fsharp-analyzers": {
-      "version": "0.25.0",
-      "commands": [
-        "fsharp-analyzers"
-      ]
     }
   }
 }

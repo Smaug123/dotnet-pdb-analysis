@@ -105,6 +105,15 @@ module Program =
             if List.isEmpty compilerFlags then
                 exitCode <- 4
                 console.LogError "No compiler flags found"
+            else
+                let flags =
+                    compilerFlags
+                    |> List.map (
+                        function
+                        | CompilerFlags flags -> flags |> Seq.map (fun (k, v) -> $"%s{k}=%s{v}") |> String.concat " "
+                    )
+
+                console.LogInformation ("Compiler flags: {CompilerFlags}", flags)
 
             match documents |> List.tryFind (fun x -> not (x.Name.StartsWith "/_")) with
             | None -> ()
