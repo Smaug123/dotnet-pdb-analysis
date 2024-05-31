@@ -45,34 +45,14 @@
     in {
       packages = {
         fantomas = dotnetTool null "fantomas" (builtins.fromJSON (builtins.readFile ./.config/dotnet-tools.json)).tools.fantomas.version (builtins.head (builtins.filter (elem: elem.pname == "fantomas") ((import ./nix/deps.nix) {fetchNuGet = x: x;}))).sha256;
-        fetchDeps = let
-          flags = [];
-          runtimeIds = ["win-x64"] ++ map (system: pkgs.dotnetCorePackages.systemToDotnetRid system) dotnet-sdk.meta.platforms;
-        in
-          pkgs.writeShellScriptBin "fetch-${pname}-deps" (builtins.readFile (pkgs.substituteAll {
-            src = ./nix/fetchDeps.sh;
-            pname = pname;
-            binPath = pkgs.lib.makeBinPath [pkgs.coreutils dotnet-sdk (pkgs.nuget-to-nix.override {inherit dotnet-sdk;})];
-            projectFiles = toString ["./PdbAnalysis/PdbAnalysis.fsproj" "./PdbAnalysis.App/PdbAnalysis.App.fsproj"];
-            testProjectFiles = ["./PdbAnalysis.Test/PdbAnalysis.Test.fsproj"];
-            rids = pkgs.lib.concatStringsSep "\" \"" runtimeIds;
-            packages = dotnet-sdk.packages;
-            storeSrc = pkgs.srcOnly {
-              src = ./.;
-              pname = pname;
-              version = version;
-            };
-          }));
         default = pkgs.buildDotnetModule {
-          pname = pname;
+          inherit pname version dotnet-sdk dotnet-runtime;
           name = "PdbAnalysis";
-          version = version;
           src = ./.;
           projectFile = "./PdbAnalysis.App/PdbAnalysis.App.fsproj";
-          nugetDeps = ./nix/deps.nix;
+          testProjectFile = "./PdbAnalysis.Test/PdbAnalysis.Test.fsproj";
+          nugetDeps = ./nix/deps.nix; # `nix build .#default.passthru.fetch-deps && ./result` and put the result here
           doCheck = true;
-          dotnet-sdk = dotnet-sdk;
-          dotnet-runtime = dotnet-runtime;
         };
       };
       apps = {
@@ -83,12 +63,8 @@
       };
       devShells = {
         default = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            (with dotnetCorePackages;
-              combinePackages [
-                dotnet-sdk_8
-                dotnetPackages.Nuget
-              ])
+          buildInputs = [
+            dotnet-sdk
           ];
           packages = [
             pkgs.alejandra
