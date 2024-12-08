@@ -15,7 +15,7 @@
     flake-utils.lib.eachDefaultSystem (system: let
       pkgs = nixpkgs.legacyPackages.${system};
       pname = "PdbAnalysis";
-      dotnet-sdk = pkgs.dotnet-sdk_8;
+      dotnet-sdk = pkgs.dotnetCorePackages.sdk_8_0;
       dotnet-runtime = pkgs.dotnetCorePackages.runtime_8_0;
       version = "0.1";
       dotnetTool = dllOverride: toolName: toolVersion: hash:
@@ -27,7 +27,7 @@
             pname = name;
             version = version;
             hash = hash;
-            installPhase = ''mkdir -p $out/bin && cp -r tools/net6.0/any/* $out/bin'';
+            installPhase = ''mkdir -p $out/bin && cp -r tools/*/any/* $out/bin'';
           };
           installPhase = let
             dll =
@@ -67,13 +67,7 @@
       };
       devShells = {
         default = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            (with dotnetCorePackages;
-              combinePackages [
-                dotnet-sdk_8
-                dotnetPackages.Nuget
-              ])
-          ];
+          buildInputs = [dotnet-sdk];
           packages = [
             pkgs.alejandra
             pkgs.nodePackages.markdown-link-check
