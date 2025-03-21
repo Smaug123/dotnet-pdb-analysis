@@ -44,7 +44,7 @@
         };
     in {
       packages = let
-        deps = builtins.readJSON (builtins.readFile ./nix/deps.json);
+        deps = builtins.fromJSON (builtins.readFile ./nix/deps.json);
       in {
         fantomas = dotnetTool null "fantomas" (builtins.fromJSON (builtins.readFile ./.config/dotnet-tools.json)).tools.fantomas.version (builtins.head (builtins.filter (elem: elem.pname == "fantomas") deps)).hash;
         default = pkgs.buildDotnetModule {
