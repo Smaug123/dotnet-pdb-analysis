@@ -55,7 +55,7 @@
           projectFile = "./PdbAnalysis.App/PdbAnalysis.App.fsproj";
           # TODO: SourceLink seems to be broken in the Nix build
           # testProjectFile = "./PdbAnalysis.Test/PdbAnalysis.Test.fsproj";
-          nugetDeps = ./nix/deps.nix; # `nix build .#default.fetch-deps && ./result nix/deps.json`
+          nugetDeps = ./nix/deps.json; # `nix build .#default.fetch-deps && ./result nix/deps.json`
           doCheck = true;
           dotnet-sdk = dotnet-sdk;
           dotnet-runtime = dotnet-runtime;
