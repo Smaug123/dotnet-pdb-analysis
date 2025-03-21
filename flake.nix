@@ -43,8 +43,10 @@
           '';
         };
     in {
-      packages = {
-        fantomas = dotnetTool null "fantomas" (builtins.fromJSON (builtins.readFile ./.config/dotnet-tools.json)).tools.fantomas.version (builtins.head (builtins.filter (elem: elem.pname == "fantomas") ((import ./nix/deps.nix) {fetchNuGet = x: x;}))).hash;
+      packages = let
+        deps = builtins.fromJSON (builtins.readFile ./nix/deps.json);
+      in {
+        fantomas = dotnetTool null "fantomas" (builtins.fromJSON (builtins.readFile ./.config/dotnet-tools.json)).tools.fantomas.version (builtins.head (builtins.filter (elem: elem.pname == "fantomas") deps)).hash;
         default = pkgs.buildDotnetModule {
           pname = pname;
           name = "PdbAnalysis";
@@ -53,7 +55,7 @@
           projectFile = "./PdbAnalysis.App/PdbAnalysis.App.fsproj";
           # TODO: SourceLink seems to be broken in the Nix build
           # testProjectFile = "./PdbAnalysis.Test/PdbAnalysis.Test.fsproj";
-          nugetDeps = ./nix/deps.nix; # `nix build .#default.passthru.fetch-deps && ./result` and put the result here
+          nugetDeps = ./nix/deps.json; # `nix build .#default.fetch-deps && ./result nix/deps.json`
           doCheck = true;
           dotnet-sdk = dotnet-sdk;
           dotnet-runtime = dotnet-runtime;
