@@ -72,7 +72,7 @@
           buildInputs = [dotnet-sdk];
           packages = [
             pkgs.alejandra
-            pkgs.nodePackages.markdown-link-check
+            pkgs.lychee
             pkgs.shellcheck
             pkgs.xmlstarlet
           ];
